@@ -2,7 +2,7 @@
 This repo focuses on 3 things:
 1. Install Anaconda, Pytorch, Jupyer Notebook, etc. on a brand-new Jeston Nano 2G.
 2. Setup, run, and benchmark Videopose3D.
-3. Optimize Videopose3D models with TensorRT and contrast the inference frame rate before and after optimization.
+3. Optimize models with TensorRT and contrast the inference frame rate before and after optimization.
 
 ### Install Dependencies
 
@@ -62,7 +62,7 @@ python -m ipykernel install --user
 
 Setup the h36m dataset and pre-trained models for Videopose3D, run evaluation, and benmark the inference frame rate. 
 
-(adapted from the original VideoPose3D repo)
+(adapted from https://github.com/facebookresearch/VideoPose3D/)
 
 ```bash
 git clone https://github.com/facebookresearch/VideoPose3D.git

@@ -2,7 +2,7 @@
 This repo focuses on 3 things:
 1. Install Anaconda, Pytorch, Jupyer Notebook, etc. on a brand-new Jeston Nano 2G.
 2. Setup, run, and benchmark Videopose3D
-3. Optimize Videopose3D models with TensorRT and benchmark the inference frame rate again.
+3. Optimize Videopose3D models with TensorRT and contrast the inference frame rate before and after optimization.
 
 ### Install Depencenties
 
@@ -10,8 +10,6 @@ Jeston Nano uses the aarch64 or arm64 architecture, rather than the widely-adopt
 
 TL;DR: How to install Anaconda, Pytorch, Jupyter Notebook, etc. on Jeston Nano 2G.
  
-### Instructions on how to setup and run VideoPose3D on Jeston Nano 2G
-
 (adpated from https://sahilramani.com/2020/10/how-to-setup-python3-and-jupyter-notebook-on-jetson-nano/)
 
  

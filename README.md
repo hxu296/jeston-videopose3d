@@ -4,7 +4,7 @@ This repo focuses on 3 things:
 2. Setup, run, and benchmark Videopose3D.
 3. Optimize Videopose3D models with TensorRT and contrast the inference frame rate before and after optimization.
 
-### Install Depencenties
+### Install Dependencies
 
 Jeston Nano uses the aarch64 or arm64 architecture, rather than the widely-adopted x86 architecture. Softwares like Anaconda, Pytorch, Jupyter Notebook, etc. are found to have installation issues following the official instructions. Working installation steps were scattered in forums and blogs around the web, and this document is here to condense them in one place.
 
@@ -58,7 +58,12 @@ jupyter notebook password  # set password for the jupyter server
 python -m ipykernel install --user
 ```
 
-### Setup, benchmark, and run Videopose3D
+### Setup, run, and benchmark Videopose3D
+
+Setup the h36m dataset and pre-trained models for Videopose3D, run evaluation, and benmark the inference frame rate. 
+
+(adapted from the original VideoPose3D repo)
+
 ```bash
 git clone https://github.com/facebookresearch/VideoPose3D.git
 cd VideoPose3D
@@ -81,8 +86,12 @@ cd checkpoint
 wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_cpn.bin
 wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_humaneva15_detectron.bin
 cd ..
+
 # run inference
-# benchmark inference on Jupyter Notebook
+python run.py -k cpn_ft_h36m_dbb -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_cpn.bin
+
+# benchmark the inference frame rate on Jupyter Notebook
+
 ```
 
 ### Optimize models with TensorRT

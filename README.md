@@ -1,7 +1,7 @@
 ### About
 This repo focuses on 3 things:
 1. Install Anaconda, Pytorch, Jupyer Notebook, etc. on a brand-new Jeston Nano 2G.
-2. Setup, run, and benchmark Videopose3D
+2. Setup, run, and benchmark Videopose3D.
 3. Optimize Videopose3D models with TensorRT and contrast the inference frame rate before and after optimization.
 
 ### Install Depencenties
@@ -37,35 +37,20 @@ conda install matplotlib numpy tqdm h5py jupyter ipywidgets
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 sudo apt install python3-pip libopenblas-base libopenmpi-dev
 pip install torch-1.6.0-cp36-cp36m-linux_aarch64.whl
-# install ffmpeg
-git clone https://github.com/jocover/jetson-ffmpeg.git
-cd jetson-ffmpeg
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
-sudo ldconfig
-cd ../..
-git clone git://source.ffmpeg.org/ffmpeg.git -b release/4.2 --depth=1
-cd ffmpeg
-wget https://github.com/jocover/jetson-ffmpeg/raw/master/ffmpeg_nvmpi.patch
-git apply ffmpeg_nvmpi.patch
-./configure --enable-nvmpi
-make
-cd ..
 # install torchvision
 sudo apt install libjpeg-dev zlib1g-dev
 git clone --branch v0.7.0 https://github.com/pytorch/vision torchvision
 cd torchvision
 export BUILD_VERSION=0.7.0  
+vim setup.py  # make change to the following line
+# has_ffmpeg = False
 python setup.py install
 cd ../
 pip install 'pillow<7'
 
 # setup the jupyter server
 jupyter notebook --generate-config
-vim /home/huanx/.jupyter/jupyter_notebook_config.py
+vim /home/huanx/.jupyter/jupyter_notebook_config.py  # make change to the following lines
 # let jupyter listen to the wildcard address, exposing port 8888
 # c.NotebookApp.open_browser = False
 # c.NotebookApp.ip = '*'
@@ -73,14 +58,29 @@ jupyter notebook password  # set password for the jupyter server
 python -m ipykernel install --user
 ```
 
-### Setup Videopose3D
+### Setup, benchmark, and run Videopose3D
 ```bash
 git clone https://github.com/facebookresearch/VideoPose3D.git
 cd VideoPose3D
-# dataset setup
-# TODO
+
+# setup the h36m dataset
+cd data
+pip install gdown
+gdown https://drive.google.com/uc?id=167vFcHP4IKLpwY8FbjYgN54FC3w-V_2g
+pip install h5py=='2.9.0'  # videopose3d used a deprecated h5py feature to extract archived data
+export HDF5_DISABLE_VERSION_CHECK=1  # mute h5py version warning
+python prepare_data_h36m.py --from-archive h36m.zip
+# h36m 2d mask-rnn and cpn
+wget https://dl.fbaipublicfiles.com/video-pose-3d/data_2d_h36m_cpn_ft_h36m_dbb.npz
+wget https://dl.fbaipublicfiles.com/video-pose-3d/data_2d_h36m_detectron_ft_h36m.npz
+cd ..
+
 # download pretrained models
-# TODO
+mkdir checkpoint
+cd checkpoint
+wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_cpn.bin
+wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_humaneva15_detectron.bin
+cd ..
 # run inference
 # benchmark inference on Jupyter Notebook
 ```

@@ -1,7 +1,7 @@
 ### About
 This repo focuses on 3 things:
 1. Install Anaconda, Pytorch, Jupyer Notebook, etc. on a brand-new Jeston Nano 2G.
-2. Setup, run, and benchmark Videopose3D.
+2. Setup, run, and benchmark the original Videopose3D.
 3. Optimize models with TensorRT and contrast the inference frame rate before and after optimization.
 
 ### Install Dependencies
@@ -60,7 +60,7 @@ python -m ipykernel install --user
 
 ### Setup, run, and benchmark Videopose3D
 
-Setup the h36m dataset and pre-trained models for Videopose3D, run evaluation, and benmark the inference frame rate. 
+VideoPose3D is a lifting network where the input is 2D human pose and the output is 3D human pose. It uses spatial-temporal convolution to exploit the information across frames. Here, we will first setup the h36m dataset and pre-trained models for Videopose3D then run evaluation and benchmark the inference speed on h36m.
 
 (adapted from https://github.com/facebookresearch/VideoPose3D/)
 
@@ -88,10 +88,27 @@ wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_humaneva15_detectro
 cd ..
 
 # run inference
-python run.py -k cpn_ft_h36m_dbb -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_cpn.bin
+python run.py -k cpn_ft_h36m_dbb -arc 3,3 -c checkpoint --evaluate h36m_cpn_receptive_9.bin
 
 # benchmark the inference frame rate on Jupyter Notebook
 
 ```
 
 ### Optimize models with TensorRT
+
+TensorRT boosts the inference speed by systematically lowering precision levels for weights and biases for higher FLOPS. Here, we use Nvidia's torch2trt library to convert Pytorch checkpoints to trt checkpoints. Then, we compare the inference speed before and after optimization. 
+
+(adapted from https://github.com/NVIDIA-AI-IOT/torch2trt/)
+
+```bash
+# install torch2trt
+conda deactivate  # fallback to Jeston Nano's vanilla environment for this, it's a pain to install tensorrt on conda
+pip3 install packaging
+git clone https://github.com/NVIDIA-AI-IOT/torch2trt
+cd torch2trt
+python setup.py install
+# install torch on the vanilla site-packages for conversion later
+pip3 install torch
+# curl https://bootstrap.pypa.io/get-pip.py | python - #  solution for TypeError: expected str, byte or ... when running pip3 install torch
+
+```

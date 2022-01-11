@@ -65,7 +65,7 @@ python -m ipykernel install --user
 
 ### Setup, run, and benchmark Videopose3D
 
-VideoPose3D is a lifting network where the input is 2D human pose and the output is 3D human pose. It uses spatial-temporal convolution to exploit the information across frames. Here, we will first setup the h36m dataset and pre-trained models for Videopose3D then run evaluation and benchmark the inference speed on h36m.
+VideoPose3D is a lifting network where the input is 2D human pose and the output is 3D human pose. It uses dilated temporal convolution to exploit the information across frames. Here, we will first setup the h36m dataset and pre-trained models for Videopose3D then run evaluation and benchmark the inference speed on h36m.
 
 (adapted from https://github.com/facebookresearch/VideoPose3D/)
 
@@ -108,7 +108,7 @@ TensorRT boosts the inference speed by systematically lowering precision levels 
 ```bash
 # install torch2trt
 pip3 install packaging termcolor
-export PYTHONPATH=/usr/lib/python3.6/dist-packages/  # add dist-packages access to the conda env (for the tensorrt package)
+export PYTHONPATH=/usr/lib/python3.6/dist-packages/  # add dist-packages access to the conda env (for accessing the tensorrt package)
 git clone https://github.com/NVIDIA-AI-IOT/torch2trt
 cd torch2trt
 sudo python3 setup.py install

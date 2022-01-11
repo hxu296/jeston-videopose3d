@@ -18,6 +18,11 @@ TL;DR: How to install Anaconda, Pytorch, Jupyter Notebook, etc. on Jeston Nano 2
 sudo apt update
 sudo apt upgrade
 
+# add cuda executables and libraries to PATH and LD_LIBRARY_PATH
+vim ~/.bashrc  # edit the following lines
+# export PATH="/usr/local/cuda/bin:$PATH"
+# export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
+
 # install miniforge3 (the official anaconda did not work in my case)
 wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh
 chmod a+x Miniforge3-Linux-aarch64.sh
@@ -109,6 +114,6 @@ cd torch2trt
 python setup.py install
 # install torch on the vanilla site-packages for conversion later
 pip3 install torch
-# curl https://bootstrap.pypa.io/get-pip.py | python - #  solution for TypeError: expected str, byte or ... when running pip3 install torch
+# curl https://bootstrap.pypa.io/get-pip.py | python3 - #  solution for TypeError: expected str, byte or ... when running pip3 install torch
 
 ```

@@ -107,13 +107,9 @@ TensorRT boosts the inference speed by systematically lowering precision levels 
 
 ```bash
 # install torch2trt
-conda deactivate  # fallback to Jeston Nano's vanilla environment for this, it's a pain to install tensorrt on conda
-pip3 install packaging
+pip3 install packaging termcolor
+export PYTHONPATH=/usr/lib/python3.6/dist-packages/  # add dist-packages access to the conda env (for the tensorrt package)
 git clone https://github.com/NVIDIA-AI-IOT/torch2trt
 cd torch2trt
-python setup.py install
-# install torch on the vanilla site-packages for conversion later
-pip3 install torch
-# curl https://bootstrap.pypa.io/get-pip.py | python3 - #  solution for TypeError: expected str, byte or ... when running pip3 install torch
-
+sudo python3 setup.py install
 ```

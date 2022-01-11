@@ -67,8 +67,8 @@ python -m ipykernel install --user
 
 VideoPose3D is a lifting network where the input is 2D human pose and the output is 3D human pose. It uses dilated temporal convolution to exploit the information across frames. Here, we will first setup the h36m dataset and pre-trained models for Videopose3D then run evaluation and benchmark the inference speed on h36m.
 
-#### Model Architecture Comparison
 ![Performance Comparison](./notebooks/vpose_perf.png)
+**Figure 1: Model Architecture Comaprison**
 
 (adapted from https://github.com/facebookresearch/VideoPose3D/)
 

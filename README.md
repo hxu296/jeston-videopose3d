@@ -10,10 +10,9 @@ Jeston Nano uses the aarch64 or arm64 architecture, rather than the widely-adopt
 
 TL;DR: How to install Anaconda, Pytorch, Jupyter Notebook, etc. on Jeston Nano 2G.
  
-(adpated from https://sahilramani.com/2020/10/how-to-setup-python3-and-jupyter-notebook-on-jetson-nano/)
-
  
 ```bash
+# (adpated from https://sahilramani.com/2020/10/how-to-setup-python3-and-jupyter-notebook-on-jetson-nano/)
 # update source.list
 sudo apt update
 sudo apt upgrade
@@ -70,9 +69,9 @@ VideoPose3D is a lifting network where the input is 2D human pose and the output
 ![Performance Comparison](./notebooks/vpose_perf.png)
 **Figure 1: Model Architecture Comaprison**
 
-(adapted from https://github.com/facebookresearch/VideoPose3D/)
 
 ```bash
+# (adapted from https://github.com/facebookresearch/VideoPose3D/)
 git clone https://github.com/facebookresearch/VideoPose3D.git
 cd VideoPose3D
 
@@ -106,9 +105,9 @@ python run.py -k cpn_ft_h36m_dbb -arc 3,3 -c checkpoint --evaluate h36m_cpn_rece
 
 TensorRT boosts the inference speed by systematically lowering precision levels for weights and biases for higher FLOPS. Here, we use Nvidia's torch2trt library to convert Pytorch checkpoints to trt checkpoints. Then, we compare the inference speed before and after optimization. 
 
-(adapted from https://github.com/NVIDIA-AI-IOT/torch2trt/)
 
 ```bash
+# (adapted from https://github.com/NVIDIA-AI-IOT/torch2trt/)
 # install torch2trt
 pip3 install packaging termcolor
 export PYTHONPATH=/usr/lib/python3.6/dist-packages/  # add dist-packages access to the conda env (for accessing the tensorrt package)

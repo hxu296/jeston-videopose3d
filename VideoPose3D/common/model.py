@@ -163,7 +163,6 @@ class TemporalModelOptimized1f(TemporalModelBase):
         channels -- number of convolution channels
         """
         super().__init__(num_joints_in, in_features, num_joints_out, filter_widths, causal, dropout, channels)
-        
         self.expand_conv = nn.Conv1d(num_joints_in*in_features, channels, filter_widths[0], stride=filter_widths[0], bias=False)
         
         layers_conv = []

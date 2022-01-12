@@ -41,6 +41,7 @@ print('Loading dataset...')
 dataset_path = 'data/data_3d_' + args.dataset + '.npz'
 if args.dataset == 'h36m':
     from common.h36m_dataset import Human36mDataset
+    #print(dataset_path)
     dataset = Human36mDataset(dataset_path)
 elif args.dataset.startswith('humaneva'):
     from common.humaneva_dataset import HumanEvaDataset
@@ -669,6 +670,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 inputs_2d = inputs_2d.cuda()
 
             # Positional model
+            #print(inputs_2d.shape)
             if not use_trajectory_model:
                 predicted_3d_pos = model_pos(inputs_2d)
             else:

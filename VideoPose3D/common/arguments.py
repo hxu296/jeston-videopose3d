@@ -71,6 +71,7 @@ def parse_args(is_driver):
     parser.add_argument('--viz-limit', type=int, default=-1, metavar='N', help='only render first N frames')
     parser.add_argument('--viz-downsample', type=int, default=1, metavar='N', help='downsample FPS by a factor N')
     parser.add_argument('--viz-size', type=int, default=5, metavar='N', help='image size')
+    parser.add_argument('--benchmark', default=False, action='store_true')
     
     parser.set_defaults(bone_length_term=True)
     parser.set_defaults(data_augmentation=True)

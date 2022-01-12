@@ -6,7 +6,7 @@
 #
 
 import numpy as np
-
+import gc
 from common.arguments import parse_args
 import torch
 
@@ -229,6 +229,28 @@ test_generator = UnchunkedGenerator(cameras_valid, poses_valid, poses_valid_2d,
                                     pad=pad, causal_shift=causal_shift, augment=False,
                                     kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right)
 print('INFO: Testing on {} frames'.format(test_generator.num_frames()))
+
+# local_vars = locals()
+# print('\n'.join([ f'{key}: {type(local_vars[key])}' for key in local_vars.keys() ]))
+
+if(args.benchmark):
+    print('Benchmark flag is on, clearing local variables to release memory...')
+    # clear out memory
+    del poses_valid_2d
+    del poses_valid
+    del joints_right
+    del joints_left
+    del kps_right
+    del kps_left
+    del keypoints_symmetry
+    del keypoints_metadata
+    del keypoints
+    del pos_3d
+    del positions_3d
+    del anim
+    gc.collect()
+    print('Local variables cleared!')
+    
 
 if not args.evaluate and is_driver:
     cameras_train, poses_train, poses_train_2d = fetch(subjects_train, action_filter, subset=args.subset)

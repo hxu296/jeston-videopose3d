@@ -24,8 +24,11 @@ from common.generators import ChunkedGenerator, UnchunkedGenerator
 from time import time
 from common.utils import deterministic_random
 
-args = parse_args()
+is_driver = __name__ == '__main__'
+
+args = parse_args(is_driver)
 print(args)
+
 
 try:
     # Create checkpoint directory if it does not exist
@@ -226,7 +229,7 @@ test_generator = UnchunkedGenerator(cameras_valid, poses_valid, poses_valid_2d,
                                     kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right)
 print('INFO: Testing on {} frames'.format(test_generator.num_frames()))
 
-if not args.evaluate:
+if not args.evaluate and is_driver:
     cameras_train, poses_train, poses_train_2d = fetch(subjects_train, action_filter, subset=args.subset)
 
     lr = args.learning_rate
@@ -721,7 +724,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
     return e1, e2, e3, ev
 
 
-if args.render:
+if args.render and is_driver:
     print('Rendering...')
     
     input_keypoints = keypoints[args.viz_subject][args.viz_action][args.viz_camera].copy()
@@ -781,7 +784,7 @@ if args.render:
                          input_video_path=args.viz_video, viewport=(cam['res_w'], cam['res_h']),
                          input_video_skip=args.viz_skip)
     
-else:
+elif is_driver:
     print('Evaluating...')
     all_actions = {}
     all_actions_by_subject = {}

@@ -7,7 +7,7 @@
 
 import argparse
 
-def parse_args():
+def parse_args(is_driver):
     parser = argparse.ArgumentParser(description='Training script')
 
     # General arguments
@@ -76,7 +76,12 @@ def parse_args():
     parser.set_defaults(data_augmentation=True)
     parser.set_defaults(test_time_augmentation=True)
     
-    args = parser.parse_args()
+    if is_driver:
+        args = parser.parse_args()
+    else:
+        argv = input('Command Line Arguments: ').split()
+        args = parser.parse_args(argv)
+
     # Check invalid configuration
     if args.resume and args.evaluate:
         print('Invalid flags: --resume and --evaluate cannot be set at the same time')

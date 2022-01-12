@@ -84,14 +84,15 @@ export HDF5_DISABLE_VERSION_CHECK=1  # mute h5py version warning
 python prepare_data_h36m.py --from-archive h36m.zip
 # h36m 2d mask-rnn and cpn
 wget https://dl.fbaipublicfiles.com/video-pose-3d/data_2d_h36m_cpn_ft_h36m_dbb.npz
-wget https://dl.fbaipublicfiles.com/video-pose-3d/data_2d_h36m_detectron_ft_h36m.npz
 cd ..
 
 # download pretrained models
 mkdir checkpoint
 cd checkpoint
 wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_cpn.bin
-wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_humaneva15_detectron.bin
+gdown https://drive.google.com/uc?id=17XFYtYwhwaYXfDk-lA5BcfRbRSlCb1Y7  # arc 3333 ch 256
+gdown https://drive.google.com/uc?id=1n8ZPjroBASS-VHpJyB-0ILEFTVtQ-H7K  # arc 333 ch 256
+gdown https://drive.google.com/uc?id=1MDJVEfssAN8tgKsbhyyvSmG4JJ8XQW1P  # arc 31 ch 1024
 cd ..
 
 # run inference
@@ -116,4 +117,8 @@ export PYTHONPATH=/usr/lib/python3.6/dist-packages/  # add dist-packages access 
 git clone https://github.com/NVIDIA-AI-IOT/torch2trt
 cd torch2trt
 sudo python3 setup.py install
+
+# use torch2trt.py to convert checkpoint
+
+# benchmark optimized models
 ```

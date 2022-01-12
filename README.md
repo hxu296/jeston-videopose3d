@@ -95,6 +95,8 @@ wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_humaneva15_detectro
 cd ..
 
 # run inference
+vim run.py  # change the following line
+# change ```if args.evaluate and 'model_traj' in checkpoint``` to ```if False```
 python run.py -k cpn_ft_h36m_dbb -arc 3,3 -c checkpoint --evaluate h36m_cpn_receptive_9.bin
 
 # benchmark the inference frame rate on Jupyter Notebook

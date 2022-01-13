@@ -248,7 +248,7 @@ if(args.benchmark):
     del pos_3d
     del positions_3d
     del anim
-    gc.collect()
+    gc.collect(generation=2)
     print('Local variables cleared!')
     
 

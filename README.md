@@ -7,10 +7,13 @@ This repo focuses on 3 things:
 ### Summary
 
 ![Performance Comparison](./notebooks/vpose_report.png)
-**Figure 1: Inference FPS before and after optimization**
+
+**Figure 1: Inference FPS before and after optimization** 
+
 
 ![Performance Comparison](./notebooks/vpose_perf.png)
 **Figure 2: Model Architecture Comaprison**
+
 
 ### Install Dependencies
 

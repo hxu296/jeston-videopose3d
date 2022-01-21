@@ -4,7 +4,7 @@ This repo focuses on 3 things:
 2. Setup, run, and benchmark the original Videopose3D.
 3. Optimize models with TensorRT and contrast the inference frame rate before and after optimization.
 
-### Summary
+### Highlight
 
 ![Performance Comparison](./notebooks/vpose_report.png)
 

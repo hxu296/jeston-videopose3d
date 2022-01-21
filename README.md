@@ -4,6 +4,14 @@ This repo focuses on 3 things:
 2. Setup, run, and benchmark the original Videopose3D.
 3. Optimize models with TensorRT and contrast the inference frame rate before and after optimization.
 
+### Summary
+
+![Performance Comparison](./notebooks/vpose_report.png)
+**Figure 1: Inference FPS before and after optimization**
+
+![Performance Comparison](./notebooks/vpose_perf.png)
+**Figure 2: Model Architecture Comaprison**
+
 ### Install Dependencies
 
 Jeston Nano uses the aarch64 or arm64 architecture, rather than the widely-adopted x86 architecture. Softwares like Anaconda, Pytorch, Jupyter Notebook, etc. are found to have installation issues following the official instructions. Working installation steps were scattered in forums and blogs around the web, and this document is here to condense them in one place.
@@ -66,9 +74,6 @@ python -m ipykernel install --user
 
 VideoPose3D is a lifting network where the input is 2D human pose and the output is 3D human pose. It uses dilated temporal convolution to exploit the information across frames. Here, we will first setup the h36m dataset and pre-trained models for Videopose3D then run evaluation and benchmark the inference speed on h36m.
 
-![Performance Comparison](./notebooks/vpose_perf.png)
-**Figure 1: Model Architecture Comaprison**
-
 
 ```bash
 # (adapted from https://github.com/facebookresearch/VideoPose3D/)
@@ -104,7 +109,7 @@ vim run.py  # change the following line
 python run.py -k cpn_ft_h36m_dbb -arc 3,3 -c checkpoint --evaluate arc_33_ch_1024_epoch_80.bin
 
 # benchmark the inference frame rate
-# follow the instructions in notebooks/perf_benchmark.ipynb to measure model performance
+# follow the instructions in notebooks/perf_benchmark.ipynb to measure inference FPS
 ```
 
 ### Optimize models with TensorRT
@@ -123,5 +128,10 @@ sudo python3 setup.py install
 
 # use torch2trt.py to convert checkpoint
 conda install yacs pyyaml
-# benchmark optimized models
+cd torch2trt
+vim config.yaml  # change the config to your liking
+python convert.py --cfg config
+mv trt_* ../VideoPose3D/checkpoint. # mv optimized checkpoint to the vpose folder
+# benchmark the inference frame rate
+# follow the instructions in notebooks/perf_benchmark_trt.ipynb to measure inference FPS
 ```

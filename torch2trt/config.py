@@ -5,13 +5,12 @@ from yacs.config import CfgNode as CN
 cfg = CN()
 
 cfg.common = CN()
-cfg.common.device = 'cuda'
 cfg.common.model_path = None
 cfg.common.model_name = None
 cfg.common.ckpt_path = None
 cfg.common.input_shape = None
 
-cfg.model = CN()
+cfg.model = CN(new_allowed=True)
 
 
 def get_cfg_defaults():

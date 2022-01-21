@@ -89,7 +89,10 @@ cd ..
 # download pretrained models
 mkdir checkpoint
 cd checkpoint
-wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_cpn.bin
+gdown https://drive.google.com/uc?id=1YtN_JhQXYE1lDUhkGhZe83ke2lx7b46n  # arc 33 ch 1024
+gdown https://drive.google.com/uc?id=1myyjkx7QnKLN3TcaQd0t7S3O1nJ51YBt  # arc 333 ch 1024
+gdown https://drive.google.com/uc?id=1h6OA66Ic1sXkD7nwHt9FsbsBWdL-nYt2  # arc 3333 ch 1024
+wget https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_cpn.bin  # arc 33333 ch 1024
 gdown https://drive.google.com/uc?id=17XFYtYwhwaYXfDk-lA5BcfRbRSlCb1Y7  # arc 3333 ch 256
 gdown https://drive.google.com/uc?id=1n8ZPjroBASS-VHpJyB-0ILEFTVtQ-H7K  # arc 333 ch 256
 gdown https://drive.google.com/uc?id=1MDJVEfssAN8tgKsbhyyvSmG4JJ8XQW1P  # arc 31 ch 1024
@@ -98,10 +101,10 @@ cd ..
 # run inference
 vim run.py  # change the following line
 # change ```if args.evaluate and 'model_traj' in checkpoint``` to ```if False```
-python run.py -k cpn_ft_h36m_dbb -arc 3,3 -c checkpoint --evaluate h36m_cpn_receptive_9.bin
+python run.py -k cpn_ft_h36m_dbb -arc 3,3 -c checkpoint --evaluate arc_33_ch_1024_epoch_80.bin
 
-# benchmark the inference frame rate on Jupyter Notebook
-
+# benchmark the inference frame rate
+# follow the instructions in notebooks/perf_benchmark.ipynb to measure model performance
 ```
 
 ### Optimize models with TensorRT
@@ -113,12 +116,12 @@ TensorRT boosts the inference speed by systematically lowering precision levels 
 # (adapted from https://github.com/NVIDIA-AI-IOT/torch2trt/)
 # install torch2trt
 pip3 install packaging termcolor
-export PYTHONPATH=/usr/lib/python3.6/dist-packages/  # add dist-packages access to the conda env (for accessing the tensorrt package)
+export PYTHONPATH=/usr/lib/python3.6/dist-packages/ # add dist-packages access to the conda env (for accessing the tensorrt package)
 git clone https://github.com/NVIDIA-AI-IOT/torch2trt
 cd torch2trt
 sudo python3 setup.py install
 
 # use torch2trt.py to convert checkpoint
-
+conda install yacs pyyaml
 # benchmark optimized models
 ```

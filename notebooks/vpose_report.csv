@@ -1,0 +1,5 @@
+receptive field,channels,architecture,trainable parameters,MPJPE on H36M (mm),FPS,trt FPS,avg time per frame (ms),trt avg time per frame (ms)
+9,1024,"3,3",4357171,50,171.82,207.03,5.82,4.83
+27,1024,"3,3,3",8555571,48.8,87.87,106.6,11.38,9.38
+81,1024,"3,3,3,3",12753971,47.7,58.89,68.07,16.98,14.69
+243,1024,"3,3,3,3,3",16952371,46.8,23.02,27.68,43.44,36.12

@@ -1,35 +1,51 @@
 import sys
+
+# a hacky way to import the torch2trt package
+dist_packages = '/usr/lib/python3.6/dist-packages/'
+torch2trt_egg = '/usr/lib/python3.6/dist-packages/torch2trt-0.3.0-py3.6.egg/'
+if dist_packages not in sys.path:
+    sys.path.append(dist_packages)
+if torch2trt_egg not in sys.path:
+    sys.path.append(torch2trt_egg)
+    
 import torch
 from torch2trt import torch2trt
 import importlib.util
 import os.path as osp
-import argparse
+from config import parse_args
 
-# return a class point to class_name from file_path
+
 def import_class_from_file(file_path, class_name):
+  """
+  return a class pointing to class_name from file_path
+  """
   spec = importlib.util.spec_from_file_location(osp.basename(file_path)[:-3], file_path)
   foo = importlib.util.module_from_spec(spec)
   spec.loader.exec_module(foo)
   return getattr(foo, class_name)
 
-# convert and save model to cwd
-def convert_model(Model, ckpt_path, input_shape): 
-  model = Model()
-  model.load_state_dict(torch.load(ckpt_path))
-  model.eval().cuda()
-  model_trt = torch2trt(model, [torch.ones(tuple(input_shape))])
-  model_trt_path = 'trt' + osp.basename(file_path)
-  torch.save(model_trt.state_dict(), model_trt_path)
+def convert_model(Model, ckpt_path, input_shape, model_args): 
+  """
+  convert and save model to cwd
+  """
+  print('Initializing model using args:')
+  print(model_args)
+  model = Model(**model_args)
+  print('Loading checkpoint...')
+  model.load_state_dict(torch.load(ckpt_path)['model_pos'])
+  model.eval()
+  model = model.cuda()
+  print('Converting model...')
+  model_trt = torch2trt(model, [torch.ones(tuple(input_shape)).cuda()])
+  print('Saving model...')
+  ckpt_trt_path = 'trt_' + osp.basename(ckpt_path)
+  torch.save(model_trt.state_dict(), ckpt_trt_path)
+  print('Done! Converted checkpoint saved in:', ckpt_trt_path)
   
 
 if __name__ == '__main__':
-  parser = argparse.ArgumentParser(description='Convert PyTorch model to trt model.')
-  parser.add_argument('-m', '--model_path', type=str, help='path to file that contains the model class') 
-  parser.add_argument('-c', '--ckpt_path', type=str, help='path to the checkpoint file') 
-  parser.add_argument('-n', '--model_name', type=str, help='model class name')
-  parser.add_argument('-s', '--input_shape', type=str, help='model input shape')
-  args = parser.parse_args()
-  Model = import_class_from_file(args.model_path, args.model_name)
-  convert_model(Model, args.ckpt_path, args.input_shape.split(','))
+  args = parse_args()
+  Model = import_class_from_file(args.common.model_path, args.common.model_name)
+  convert_model(Model, args.common.ckpt_path, args.common.input_shape, dict(args.model))
 
 

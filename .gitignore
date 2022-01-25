@@ -1,4 +1,7 @@
-**data/
 **checkpoint/
 **/*bin
 **/*pkl
+**/*json
+**/*npz
+**/*npy
+**/*zip
